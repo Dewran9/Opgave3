@@ -1,0 +1,20 @@
+name: Deploy static site to Azure Web App (opg3)
+
+on:
+  push:
+    branches: [ master ]        # skift til [ main ] hvis din branch hedder main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'opg3'                          # ← skift hvis din App Service hedder noget andet
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: .                                 # ← punktum = repo-roden (hvor index.html ligger)
